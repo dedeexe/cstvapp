@@ -1,10 +1,3 @@
-//
-//  CSTVAppTests.swift
-//  CSTVAppTests
-//
-//  Created by Fabricio Santos on 20/02/25.
-//
-
 import Testing
 @testable import CSTVApp
 

@@ -1,10 +1,3 @@
-//
-//  CSTVAppUITestsLaunchTests.swift
-//  CSTVAppUITests
-//
-//  Created by Fabricio Santos on 20/02/25.
-//
-
 import XCTest
 
 final class CSTVAppUITestsLaunchTests: XCTestCase {
