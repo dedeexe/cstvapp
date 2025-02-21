@@ -6,7 +6,7 @@ struct TeamNameView: View {
 
     var body: some View {
         VStack(spacing: Spacing.small) {
-            imageView
+            ImageView(imageURL: imageUrl)
                 .frame(height: Dimension.raw60)
 
             Text(name)
@@ -15,27 +15,6 @@ struct TeamNameView: View {
         }
         .frame(width: Dimension.raw60)
         .padding(Spacing.small)
-    }
-
-    var imageView: some View {
-        AsyncImage(url: imageUrl) { phase in
-            switch phase {
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFit()
-            case .failure, .empty:
-                placeholder
-            @unknown default:
-                placeholder
-            }
-        }
-    }
-
-    var placeholder: some View {
-        Circle()
-            .frame(height: Dimension.raw60)
-            .foregroundStyle(Palette.secondary.color)
     }
 }
 
