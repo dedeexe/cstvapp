@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  CSTVApp
-//
-//  Created by Fabricio Santos on 20/02/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -22,3 +15,14 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+
+/*
+ 1. Set ColorSet
+ 2. Set Typography
+ 3. Components:
+    - Team Logo Name
+    - Match Card with time and league info
+    - Math player Cardo (Left aligned and right aligned)
+ */
+
