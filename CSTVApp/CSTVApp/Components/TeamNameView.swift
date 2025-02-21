@@ -8,10 +8,8 @@ struct TeamNameView: View {
         VStack(spacing: Spacing.small) {
             ImageView(imageURL: imageUrl)
                 .frame(height: Dimension.raw60)
-
-            Text(name)
-                .foregroundStyle(Palette.caption.color)
-                .font(Typography.captionSmall)
+            
+            TextLabel(name, style: .small)
         }
         .frame(width: Dimension.raw60)
         .padding(Spacing.small)

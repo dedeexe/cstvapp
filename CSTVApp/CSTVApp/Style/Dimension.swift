@@ -7,4 +7,5 @@ enum Dimension {
 
 enum Spacing {
     static let small: CGFloat = 8
+    static let normal: CGFloat = 16
 }
