@@ -20,7 +20,7 @@ struct ImageView: View {
 
     var placeholder: some View {
         Circle()
-            .frame(height: Dimension.raw60)
+            .frame(height: Measure.raw60)
             .foregroundStyle(Palette.secondary.color)
     }
 }

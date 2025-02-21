@@ -5,7 +5,7 @@ struct CompetitorsView: View {
     let secondTeam: Team
 
     var body: some View {
-        HStack(spacing: Spacing.normal) {
+        HStack(spacing: Measure.spaceNormal) {
             TeamNameView(name: firstTeam.name, imageUrl: firstTeam.imageLogo)
             TextLabel("VS", style: .subtitle)
             TeamNameView(name: secondTeam.name, imageUrl: secondTeam.imageLogo)

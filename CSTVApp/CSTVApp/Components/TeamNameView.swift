@@ -5,14 +5,14 @@ struct TeamNameView: View {
     let imageUrl: URL?
 
     var body: some View {
-        VStack(spacing: Spacing.small) {
+        VStack(spacing: Measure.spaceSmall) {
             ImageView(imageURL: imageUrl)
-                .frame(height: Dimension.raw60)
+                .frame(height: Measure.raw60)
             
             TextLabel(name, style: .small)
         }
-        .frame(width: Dimension.raw60)
-        .padding(Spacing.small)
+        .frame(width: Measure.raw60)
+        .padding(Measure.spaceSmall)
     }
 }
 
