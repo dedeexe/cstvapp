@@ -3,8 +3,10 @@ import Foundation
 struct HTTPRequest {
     var url: String
     var method: Method = .get
+    var parameters: Parameters = [:]
+    var header: Header = [:]
     var body: Body? = nil
-    var header: Header?
+
     var timeout: TimeInterval = 30.0
 
     // MARK: - Static Methosd
@@ -44,8 +46,13 @@ class HTTPRequestBuilder {
         return self
     }
 
-    func header(_ value: HTTPRequest.Header) -> HTTPRequestBuilder {
-        request.header = value
+    func header(key: String, value: String?) -> HTTPRequestBuilder {
+        request.header[key] = value
+        return self
+    }
+
+    func paramter(key: String, value: String?) -> HTTPRequestBuilder {
+        request.parameters[key] = value
         return self
     }
 

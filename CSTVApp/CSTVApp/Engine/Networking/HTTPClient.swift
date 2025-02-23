@@ -58,8 +58,20 @@ final class HTTPClient {
     private func makeRequest(_ request: HTTPRequest,
                              additionalHeaders: HTTPRequest.Header = [:]) -> URLRequest? {
 
-        guard let url = URL(string: request.url) else { return nil }
-        let header = request.header ?? [:]
+        guard let transientURL = URL(string: request.url) else {
+            return nil
+        }
+
+        var urlComponents =  URLComponents(url: transientURL, resolvingAgainstBaseURL: true)
+        let queryItems:[URLQueryItem] = request.parameters.map {
+            URLQueryItem(name: $0.key, value: $0.value)
+        }
+
+        urlComponents?.queryItems = queryItems
+
+        guard let url = urlComponents?.url else {
+            return nil
+        }
 
         var newRequest = URLRequest(url: url,
                                     cachePolicy: URLRequest.CachePolicy.useProtocolCachePolicy,
@@ -67,7 +79,7 @@ final class HTTPClient {
 
         newRequest.httpMethod = request.method.rawValue
 
-        header.forEach { key, value in
+        request.header.forEach { key, value in
             newRequest.addValue(value, forHTTPHeaderField: key)
         }
 
@@ -75,7 +87,10 @@ final class HTTPClient {
             newRequest.addValue(value, forHTTPHeaderField: key)
         }
 
-        newRequest.httpBody = request.body
+        
+        
+
         return newRequest
     }
+
 }

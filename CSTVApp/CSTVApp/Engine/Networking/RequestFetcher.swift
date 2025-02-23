@@ -17,7 +17,7 @@ class RequestFetcher {
         self.client = client
     }
 
-    func fetch<T: Decodable>(_ type: T.Type, request: HTTPRequest) async throws -> T? {
+    func fetch<T: Decodable>(_ type: T.Type, request: HTTPRequest) async throws -> T {
         let data = try await client.requestData(request, interceptors: interceptors)
 
         do {
