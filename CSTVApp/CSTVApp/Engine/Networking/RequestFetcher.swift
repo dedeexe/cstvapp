@@ -8,6 +8,12 @@ class RequestFetcher {
     private var client: HTTPClient
     private var decoder: JSONDecoder?
 
+    let defaultDecoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+
     let interceptors: [HTTPServiceRequestInterceptor] = [
         InsertTokenInterceptor()
     ]
@@ -21,7 +27,7 @@ class RequestFetcher {
         let data = try await client.requestData(request, interceptors: interceptors)
 
         do {
-            let decoder = self.decoder ?? JSONDecoder()
+            let decoder = self.decoder ?? defaultDecoder
             let object = try decoder.decode(type, from: data)
             return object
         } catch {

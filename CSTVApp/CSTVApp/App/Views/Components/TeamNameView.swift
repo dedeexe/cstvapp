@@ -10,6 +10,7 @@ struct TeamNameView: View {
                 .frame(height: Measure.raw60)
             
             TextLabel(name, style: .small)
+                .multilineTextAlignment(.center)
         }
         .frame(width: Measure.raw60)
         .padding(Measure.spaceSmall)

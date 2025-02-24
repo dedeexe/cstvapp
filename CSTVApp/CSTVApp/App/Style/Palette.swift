@@ -2,9 +2,12 @@ import SwiftUI
 
 enum Palette: String {
     case background
+    case caption
+    case labelActive
+    case labelDeactive
     case primary
     case secondary
-    case caption
+    case separator
     case subtitle
 
     var color: Color {

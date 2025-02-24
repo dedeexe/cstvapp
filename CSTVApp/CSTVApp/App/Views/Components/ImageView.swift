@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ImageView: View {
     let imageURL: URL?
+    var scalling: Bool = false
 
     var body: some View {
         AsyncImage(url: imageURL) { phase in

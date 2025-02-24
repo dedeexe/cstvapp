@@ -1,12 +1,12 @@
 import Foundation
 
-
 enum Response {
 
     typealias Matches = [Match]
 
     // MARK: - WelcomeElement
     struct Match: Decodable {
+        let id: Int?
         let beginAt: String?
         let detailedStats: Bool?
         let draw: Bool?
@@ -14,7 +14,6 @@ enum Response {
         let forfeit: Bool?
         let gameAdvantage: String?
         let games: [Game]?
-        let id: Int?
         let league: League?
         let leagueId: Int?
         let live: Live?
@@ -28,7 +27,8 @@ enum Response {
         let scheduledAt: String?
         let serie: Serie?
         let serieId: Int?
-        let slug, status: String?
+        let slug: String?
+        let status: String?
         let tournament: Tournament?
     }
 
@@ -58,7 +58,7 @@ enum Response {
     // MARK: - League
     struct League: Decodable {
         let id: Int?
-        let imageURL: String?
+        let imageUrl: String?
         let modifiedAt: String?
         let name, slug: String?
         let url: String?
@@ -81,7 +81,7 @@ enum Response {
     struct OpponentOpponent: Decodable {
         let acronym: String?
         let id: Int?
-        let imageURL: String?
+        let imageUrl: String?
         let location: String?
         let modifiedAt: String?
         let name: String?
@@ -91,14 +91,16 @@ enum Response {
 
     // MARK: - Serie
     struct Serie: Decodable {
+        let id: Int?
         let beginAt: String?
         let endAt: String?
         let fullName: String?
-        let id: Int?
         let leagueId: Int?
         let modifiedAt: String?
-        let name, season, slug: String?
-        let winnerId: String?
+        let name: String?
+        let season: String?
+        let slug: String?
+        let winnerId: Int?
         let winnerType: String?
         let year: Int?
     }
@@ -121,7 +123,7 @@ enum Response {
         let slug: String?
         let tier: String?
         let type: String?
-        let winnerId: String?
+        let winnerId: Int?
         let winnerType: String?
     }
 }
