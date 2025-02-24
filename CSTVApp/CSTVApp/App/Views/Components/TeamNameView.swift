@@ -6,7 +6,7 @@ struct TeamNameView: View {
 
     var body: some View {
         VStack(spacing: Measure.spaceSmall) {
-            ImageView(imageURL: imageUrl)
+            CachedImageView(imageURL: imageUrl)
                 .frame(height: Measure.raw60)
             
             TextLabel(name, style: .small)

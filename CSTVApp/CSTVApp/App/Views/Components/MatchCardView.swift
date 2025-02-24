@@ -46,7 +46,7 @@ struct MatchCardView: View {
 
     var leagueView: some View {
         HStack {
-            ImageView(imageURL: match.league.imageURL)
+            CachedImageView(imageURL: match.league.imageURL)
                 .frame(width: Measure.raw16, height: Measure.raw16)
             TextLabel(match.leagueFullName)
             Spacer()

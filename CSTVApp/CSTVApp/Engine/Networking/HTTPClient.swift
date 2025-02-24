@@ -16,11 +16,13 @@ protocol HTTPServiceRequestInterceptor {
 
 final class HTTPClient {
     let urlSession: URLSession
+    let urlCache: URLCache
 
     private(set) var requestMiddlewares: [HTTPServiceRequestInterceptor] = []
 
-    init(urlSession: URLSession = URLSession.shared) {
+    init(urlSession: URLSession = URLSession.shared, urlCache: URLCache = URLCache.shared) {
         self.urlSession = urlSession
+        self.urlCache = urlCache
     }
 
     func addRequestMiddleware(_ middleware: HTTPServiceRequestInterceptor) {
@@ -30,12 +32,18 @@ final class HTTPClient {
     func requestData(
         _ request: HTTPRequest,
         additionalHeaders: [String: String] = [:],
-        interceptors: [HTTPServiceRequestInterceptor]
+        interceptors: [HTTPServiceRequestInterceptor],
+        useCache: Bool = false
     ) async throws -> Data {
         let successRange = 200..<300
 
         guard let urlRequest = makeRequest(request, additionalHeaders: additionalHeaders) else {
             throw HTTPClientError.invalidRequestURL
+        }
+
+
+        if useCache, let cachedResponse = urlCache.cachedResponse(for: urlRequest) {
+            return cachedResponse.data
         }
 
         let interceptedRequest = interceptors.reduce(urlRequest) { request, middleware in
@@ -52,6 +60,7 @@ final class HTTPClient {
             throw HTTPClientError.unknownError
         }
 
+        urlCache.storeCachedResponse(.init(response: response, data: data), for: urlRequest)
         return data
     }
 
