@@ -12,7 +12,7 @@ struct CSGOMatchesListScreen: View {
             Palette.background.color
 
             if viewModel.isLoading {
-                Text("Loading...")
+                SpinnerView()
             } else {
                 matchesList
             }

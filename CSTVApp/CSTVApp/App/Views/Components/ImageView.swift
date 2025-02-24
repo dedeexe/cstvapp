@@ -25,7 +25,7 @@ struct CachedImageView: View {
                         }
                     }
             case .loading:
-                Text("Loading...")
+                SpinnerView()
             case .loaded(let uiImage):
                 Image(uiImage: uiImage)
                     .resizable()
