@@ -1,7 +1,7 @@
 import Foundation
 
 extension Team {
-    init?(mapping entity: Response.OpponentElement?) {
+    init?(mapping entity: Response.TeamInfo?) {
         guard let entity = entity else {
             return nil
         }

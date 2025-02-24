@@ -21,7 +21,7 @@ enum Response {
         let modifiedAt: String?
         let name: String?
         let numberOfGames: Int?
-        let opponents: [OpponentElement]?
+        let opponents: [TeamInfo]?
         let originalScheduledAt: String?
         let rescheduled: Bool?
         let scheduledAt: String?
@@ -72,22 +72,30 @@ enum Response {
     }
 
     // MARK: - OpponentElement
-    struct OpponentElement: Decodable {
-        let opponent: OpponentOpponent?
+    struct TeamInfo: Decodable {
+        let opponent: Team?
         let type: String?
     }
 
     // MARK: - OpponentOpponent
-    struct OpponentOpponent: Decodable {
-        let acronym: String?
+    struct Team: Decodable {
         let id: Int?
-        let imageUrl: String?
+        let name: String?
         let location: String?
-        let modifiedAt: String?
+        let slug: String?
+        let players: [Player]?
+        let modifiedAt: Date?
+        let acronym: String?
+        let imageUrl: String?
+        let currentVideogame: Videogame?
+    }
+
+    // MARK: - Videogame
+    struct Videogame: Decodable {
+        let id: Int?
         let name: String?
         let slug: String?
     }
-
 
     // MARK: - Serie
     struct Serie: Decodable {
