@@ -18,7 +18,7 @@ struct PlayerView: View {
 
                 VStack(alignment: horizontalAlignment) {
                     TextLabel(player.nickname, style: .caption)
-                    TextLabel(player.nickname, style: .subtitle)
+                    TextLabel(player.name, style: .subtitle)
                 }
                 .padding(style == .leading ? .leading : .trailing, 72)
 
@@ -58,8 +58,9 @@ struct PlayerView: View {
     }
 
     var photoView: some View {
-        CachedImageView(imageURL: player.imageURL, placeholderStyle: .roundedRectangle)
+        CachedImageView(imageURL: player.imageURL, aspectFill: true, placeholderStyle: .roundedRectangle)
             .frame(width: Measure.raw48, height: Measure.raw48)
+            .clipShape(RoundedRectangle(cornerRadius: Measure.radiusXSmall))
             .padding(style == .leading ? .leading : .trailing, Measure.raw8)
     }
 }
@@ -67,10 +68,10 @@ struct PlayerView: View {
 #Preview {
     VStack(spacing: 16) {
         Spacer()
-        PlayerView(player: Player(name: "Player", nickname: "Mr Player", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")), style: .leading)
+        PlayerView(player: Player(id: "0", name: "Player", nickname: "Mr Player", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")), style: .leading)
             .padding(.leading, 30)
 
-        PlayerView(player: Player(name: "Player", nickname: "Mr Player", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")), style: .trailing)
+        PlayerView(player: Player(id: "1", name: "Player", nickname: "Mr Player", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")), style: .trailing)
             .padding(.trailing, 30)
         Spacer()
     }

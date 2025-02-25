@@ -20,4 +20,13 @@ final class MatchesService {
         let result = try await fetcher.fetch(PandasScoreResponse.Matches.self, request: request)
         return result
     }
+
+    func fetchMatch(id: Int) async throws -> PandasScoreResponse.Match {
+        let request = HTTPRequest.builder
+            .url(ConfigProvider().baseURLFor(game: .none) + path + "/" + String(id))
+            .build()
+
+        let result = try await fetcher.fetch(PandasScoreResponse.Match.self, request: request)
+        return result
+    }
 }

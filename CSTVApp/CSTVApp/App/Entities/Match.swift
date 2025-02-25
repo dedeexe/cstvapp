@@ -1,7 +1,7 @@
 import Foundation
 
 struct Match: Identifiable {
-    var id: String = UUID().uuidString
+    var id: String
     var teams: [Team]
     var league: League
     var serie: Serie
@@ -33,5 +33,11 @@ struct Match: Identifiable {
         }
 
         return result
+    }
+}
+
+extension Match {
+    static var empty: Match {
+        Match(id: "", teams: [.empty, .empty], league: .init(name: ""), serie: .init(fullName: ""))
     }
 }

@@ -5,6 +5,7 @@ import XCTest
 final class TeamServiceTests: XCTestCase {
 
     var sut: TeamService!
+    var sut2: MatchesService!
 
     override func setUpWithError() throws {
 
@@ -17,6 +18,12 @@ final class TeamServiceTests: XCTestCase {
     func testAPIRequest() async throws {
         sut = TeamService()
         let result = try await sut.fetchTeam(id: 133009)
+        print(result)
+    }
+
+    func testAPIRequest2() async throws {
+        sut2 = MatchesService()
+        let result = try await sut2.fetchMatch(id: 1131797)
         print(result)
     }
 

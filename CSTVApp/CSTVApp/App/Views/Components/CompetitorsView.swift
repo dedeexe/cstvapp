@@ -16,8 +16,8 @@ struct CompetitorsView: View {
 #Preview {
     HStack {
         CompetitorsView(
-            firstTeam: Team(name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-            secondTeam: Team(name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
+            firstTeam: Team(id: "1", name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: []),
+            secondTeam: Team(id: "2", name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: [])
         )
     }
     .background(Palette.background.color)

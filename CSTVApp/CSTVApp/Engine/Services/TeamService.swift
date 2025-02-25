@@ -10,9 +10,9 @@ final class TeamService {
         self.fetcher = fetcher
     }
 
-    func fetchTeam(id: Int) async throws -> PandasScoreResponse.Team {
+    func fetchTeam(id: String) async throws -> PandasScoreResponse.Team {
         let request = HTTPRequest.builder
-            .url(ConfigProvider().baseURLFor(game: .none) + path + String(id))
+            .url(ConfigProvider().baseURLFor(game: .none) + path + id)
             .build()
 
         let result = try await fetcher.fetch(PandasScoreResponse.Team.self, request: request)

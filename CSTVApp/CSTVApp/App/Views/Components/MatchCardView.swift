@@ -61,8 +61,8 @@ struct MatchCardView: View {
             match: Match(
                 id: "001",
                 teams: [
-                    Team(name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-                    Team(name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
+                    Team(id: "0", name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: []),
+                    Team(id: "1", name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: [])
                 ],
                 league: League(name: "Main League", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
                 serie: Serie(fullName: "The League"),
@@ -75,8 +75,8 @@ struct MatchCardView: View {
             match: Match(
                 id: "001",
                 teams: [
-                    Team(name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-                    Team(name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
+                    Team(id: "0", name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: []),
+                    Team(id: "1", name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: [])
                 ],
                 league: League(name: "Main League", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
                 serie: Serie(fullName: "The League"),
