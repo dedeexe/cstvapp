@@ -23,6 +23,7 @@ extension TextLabel {
         case small
         case tiny
         case subtitle
+        case caption
 
         var font: Font {
             switch self {
@@ -32,6 +33,8 @@ extension TextLabel {
                 return Typography.captionTiny
             case.subtitle:
                 return Typography.subtitle
+            case .caption:
+                return Typography.caption
             }
         }
 
@@ -41,6 +44,8 @@ extension TextLabel {
                 return Palette.caption.color
             case .subtitle:
                 return Palette.subtitle.color
+            case .caption:
+                return Palette.caption.color
             }
         }
     }

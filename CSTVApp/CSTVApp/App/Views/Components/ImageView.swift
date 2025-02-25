@@ -9,9 +9,15 @@ struct CachedImageView: View {
         case failed
     }
 
-    @State var phase: Phase = .idle
+    enum PlaceholderStyle {
+        case roundedRectangle
+        case circle
+    }
+
+    @State private var phase: Phase = .idle
     let imageURL: URL?
-    var scalling: Bool = false
+    var aspectFill: Bool = false
+    var placeholderStyle: PlaceholderStyle = .circle
     var fetcher: ImageFetcher = ImageFetcher()
 
     var body: some View {
@@ -27,9 +33,15 @@ struct CachedImageView: View {
             case .loading:
                 SpinnerView()
             case .loaded(let uiImage):
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
+                if aspectFill {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                }
             case .failed:
                 placeholder
             }
@@ -37,9 +49,16 @@ struct CachedImageView: View {
     }
 
     var placeholder: some View {
-        Circle()
-            .frame(height: Measure.raw60)
-            .foregroundStyle(Palette.secondary.color)
+        switch placeholderStyle {
+        case .circle:
+            return AnyView(Circle()
+                .frame(height: Measure.raw60)
+                .foregroundStyle(Palette.secondary.color))
+        case .roundedRectangle:
+            return AnyView(RoundedRectangle(cornerRadius: Measure.radiusXSmall)
+                .foregroundStyle(Palette.secondary.color))
+        }
+
     }
 
     func downloadImage() async {
@@ -63,6 +82,8 @@ struct CachedImageView: View {
         CachedImageView(imageURL: nil)
             .frame(width: 60, height: 60)
         CachedImageView(imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
+            .frame(width: 60, height: 60)
+        CachedImageView(imageURL: nil, placeholderStyle: .roundedRectangle)
             .frame(width: 60, height: 60)
     }
     .background(Palette.background.color)
