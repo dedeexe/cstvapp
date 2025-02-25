@@ -1,5 +1,6 @@
 struct ConfigProvider {
     enum Game: String {
+        case none = ""
         case csgo = "csgo"
     }
 
@@ -8,6 +9,10 @@ struct ConfigProvider {
     }
 
     func baseURLFor(game: Game) -> String {
-        baseURL + game.rawValue + "/"
+        if game == .none {
+            return baseURL
+        }
+        
+        return baseURL + game.rawValue + "/"
     }
 }

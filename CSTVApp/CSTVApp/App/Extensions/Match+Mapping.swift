@@ -1,7 +1,7 @@
 import Foundation
 
 extension Match {
-    init?(mapping entity: Response.Match?) {
+    init?(mapping entity: PandasScoreResponse.Match?) {
         guard let entity = entity else {
             return nil
         }

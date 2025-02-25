@@ -1,7 +1,7 @@
 import Foundation
 
 extension League {
-    init?(mapping entity: Response.League?) {
+    init?(mapping entity: PandasScoreResponse.League?) {
         guard let entity = entity else {
             return nil
         }

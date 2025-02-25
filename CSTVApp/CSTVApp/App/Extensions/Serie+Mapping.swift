@@ -1,5 +1,5 @@
 extension Serie {
-    init?(mapping entity: Response.Serie?) {
+    init?(mapping entity: PandasScoreResponse.Serie?) {
         guard let entity = entity else {
             return nil
         }

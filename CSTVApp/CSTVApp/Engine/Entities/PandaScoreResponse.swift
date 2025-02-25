@@ -1,10 +1,10 @@
 import Foundation
 
-enum Response {
-
+enum PandasScoreResponse {
     typealias Matches = [Match]
+    typealias Players = [Player]
 
-    // MARK: - WelcomeElement
+    // MARK: - Match[
     struct Match: Decodable {
         let id: Int?
         let beginAt: String?
@@ -84,7 +84,7 @@ enum Response {
         let location: String?
         let slug: String?
         let players: [Player]?
-        let modifiedAt: Date?
+        let modifiedAt: String?
         let acronym: String?
         let imageUrl: String?
         let currentVideogame: Videogame?
@@ -134,4 +134,21 @@ enum Response {
         let winnerId: Int?
         let winnerType: String?
     }
+
+    // MARK: - Player
+    struct Player: Decodable {
+        let active: Bool?
+        let id: Int?
+        let name: String?
+        let role: String?
+        let slug: String?
+        let modifiedAt: String?
+        let age: Int?
+        let birthday: String?
+        let firstName: String?
+        let lastName: String?
+        let nationality: String?
+        let imageUrl: String?
+    }
+
 }
