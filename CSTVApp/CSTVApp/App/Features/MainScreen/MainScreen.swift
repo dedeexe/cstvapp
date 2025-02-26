@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct MainScreen: View {
+
     @StateObject var appRouter: AppRouter
+    @StateObject var viewModel: MainViewModel = MainViewModel()
+    @State private var animationPhase: SplashScreen.AnimationPhase = .opening
 
     var body: some View {
-        NavigationStack(path: $appRouter.paths) {
-            appRouter.getInitialRouter().makeView()
-                .navigationDestination(for: AnyRoutable.self) { factory in
-                    factory.makeView()
-                }
+        switch viewModel.viewState {
+        case .home:
+            NavigationStack(path: $appRouter.paths) {
+                appRouter.getInitialRouter().makeView()
+                    .navigationDestination(for: AnyRoutable.self) { factory in
+                        factory.makeView()
+                    }
+            }
+
+        case .splash:
+            SplashScreen(animationPhase: $viewModel.animationPhase)
+                .onAppear(perform: viewModel.start)
         }
     }
 }

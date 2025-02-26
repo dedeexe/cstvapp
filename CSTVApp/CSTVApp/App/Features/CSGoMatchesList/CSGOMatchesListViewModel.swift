@@ -9,6 +9,7 @@ class CSGOMatchesListViewModel: ObservableObject {
     var matchesUseCase: CSGOMatchesListUseCase
     var referenceDate: Date = Date()
     var page = 1
+    var isFirstTime = true
 
     private let router: CSGOMatchesListRouter
 
@@ -21,7 +22,7 @@ class CSGOMatchesListViewModel: ObservableObject {
     }
 
     func getMatches() {
-        guard !isLoading else {
+        guard !isLoading, isFirstTime else {
             return
         }
 
@@ -34,6 +35,7 @@ class CSGOMatchesListViewModel: ObservableObject {
             Task { @MainActor [weak self] in
                 self?.matches += result
                 self?.isLoading = false
+                self?.isFirstTime = false
             }
         }
     }
