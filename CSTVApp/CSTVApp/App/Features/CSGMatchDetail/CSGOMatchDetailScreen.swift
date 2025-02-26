@@ -3,7 +3,7 @@ import SwiftUI
 struct CSGOMatchDetailScreen: View {
     @StateObject var viewModel: CSGOMatchDetailScreenViewModel
 
-    init(viewModel: CSGOMatchDetailScreenViewModel = CSGOMatchDetailScreenViewModel()) {
+    init(viewModel: CSGOMatchDetailScreenViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -59,6 +59,6 @@ struct CSGOMatchDetailScreen: View {
 
 #Preview {
     NavigationStack {
-        CSGOMatchDetailScreen()
+        CSGOMatchDetailScreen(viewModel: CSGOMatchDetailScreenViewModel(matchId: "130064", router: .previewMock))
     }
 }

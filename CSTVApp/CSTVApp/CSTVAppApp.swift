@@ -4,7 +4,7 @@ import SwiftUI
 struct CSTVAppApp: App {
     var body: some Scene {
         WindowGroup {
-            MainScreen()
+            MainScreen(appRouter: AppRouter())
         }
     }
 }

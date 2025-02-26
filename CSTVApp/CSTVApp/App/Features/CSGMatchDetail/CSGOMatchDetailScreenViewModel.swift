@@ -5,8 +5,9 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
     @Published var match: Match = .empty
     @Published var isLoading: Bool = false
 
-    let useCase: CSGOMatchDetailUseCase
-    let matchId: String
+    private let useCase: CSGOMatchDetailUseCase
+    private let matchId: String
+    private let router: CSGOMatchDetailRouter
 
     var firstTeam: Team {
         match.teams[0]
@@ -24,41 +25,10 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
         match.league.name + " " + match.serie.fullName
     }
 
-    init(matchId: String = "1131797", useCase: CSGOMatchDetailUseCase = CSGOMatchDetailUseCase()) {
+    init(matchId: String, useCase: CSGOMatchDetailUseCase = CSGOMatchDetailUseCase(), router: CSGOMatchDetailRouter) {
         self.useCase = useCase
         self.matchId = matchId
-
-//        self.match = Match(
-//            id: UUID().uuidString,
-//            teams: [
-//                .init(
-//                    id: UUID().uuidString,
-//                    name: "Team1",
-//                    imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"),
-//                    players: [
-//                        .init(id: UUID().uuidString, name: "Player1", nickname: "player_1", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player2", nickname: "player_2", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player3", nickname: "player_3", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player4", nickname: "player_4", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player5", nickname: "player_5", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
-//                    ]
-//                ),
-//                .init(
-//                    id: UUID().uuidString,
-//                    name: "Team1",
-//                    imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"),
-//                    players: [
-//                        .init(id: UUID().uuidString, name: "Player1", nickname: "player_1", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player2", nickname: "player_2", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player3", nickname: "player_3", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player4", nickname: "player_4", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//                        .init(id: UUID().uuidString, name: "Player5", nickname: "player_5", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
-//                    ]
-//                )
-//            ],
-//            league: .init(name: "The League", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-//            serie: .init(fullName: "The Serie")
-//        )
+        self.router = router
     }
 
     func getMatchDetail() {

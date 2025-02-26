@@ -3,7 +3,7 @@ import SwiftUI
 struct CSGOMatchesListScreen: View {
     @StateObject var viewModel: CSGOMatchesListViewModel
 
-    init(viewModel: CSGOMatchesListViewModel = CSGOMatchesListViewModel()) {
+    init(viewModel: CSGOMatchesListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -34,11 +34,14 @@ struct CSGOMatchesListScreen: View {
                 .padding(Measure.raw1)
                 .listRowSeparator(.hidden)
                 .listRowBackground(Palette.background.color)
+                .onTapGesture {
+                    viewModel.didTapMatch(match: match)
+                }
         }
         .listStyle(.plain)
     }
 }
 
 #Preview {
-    CSGOMatchesListScreen()
+    CSGOMatchesListScreen(viewModel: CSGOMatchesListViewModel(router: CSGOMatchesListRouter.previewMock))
 }

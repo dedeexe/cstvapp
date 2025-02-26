@@ -10,10 +10,14 @@ class CSGOMatchesListViewModel: ObservableObject {
     var referenceDate: Date = Date()
     var page = 1
 
+    private let router: CSGOMatchesListRouter
+
     init(
-        matchesUseCase: CSGOMatchesListUseCase = CSGOMatchesListUseCase()
+        matchesUseCase: CSGOMatchesListUseCase = CSGOMatchesListUseCase(),
+        router: CSGOMatchesListRouter
     ) {
         self.matchesUseCase = matchesUseCase
+        self.router = router
     }
 
     func getMatches() {
@@ -32,5 +36,9 @@ class CSGOMatchesListViewModel: ObservableObject {
                 self?.isLoading = false
             }
         }
+    }
+
+    func didTapMatch(match: Match) {
+        router.rootToMatchDetails(match: match)
     }
 }
