@@ -26,6 +26,9 @@ struct CSGOMatchesListScreen: View {
         .onAppear {
             viewModel.getMatches()
         }
+        .refreshable {
+            viewModel.refresh()
+        }
     }
 
     var matchesList: some View {

@@ -3,6 +3,7 @@ import Foundation
 class CSGOMatchesListViewModel: ObservableObject {
 
     @Published var matches: [Match] = []
+    @Published var isRefreshLoading: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
 
@@ -21,12 +22,17 @@ class CSGOMatchesListViewModel: ObservableObject {
         self.router = router
     }
 
-    func getMatches() {
-        guard !isLoading, isFirstTime else {
+    func getMatches(byPullRefresh: Bool = false) {
+        guard !isLoading && !isRefreshLoading, isFirstTime else {
             return
         }
 
-        isLoading.toggle()
+        if byPullRefresh {
+            self.isRefreshLoading.toggle()
+        } else {
+            isLoading.toggle()
+        }
+
         errorMessage = nil
 
         Task {
@@ -36,8 +42,16 @@ class CSGOMatchesListViewModel: ObservableObject {
                 self?.matches += result
                 self?.isLoading = false
                 self?.isFirstTime = false
+                self?.isRefreshLoading = false
             }
         }
+    }
+
+    func refresh() {
+        page = 1
+        isFirstTime = true
+        referenceDate = Date()
+        getMatches(byPullRefresh: true)
     }
 
     func didTapMatch(match: Match) {
