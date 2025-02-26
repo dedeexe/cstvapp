@@ -16,7 +16,7 @@ final class MatchesService {
             .paramter(key: "begin_at", value: date.formattedISO8601)
             .paramter(key: "page", value: String(page))
             .paramter(key: "per_page", value: String(pageSize))
-            .paramter(key: "sort", value: "-begin_at")
+            .paramter(key: "sort", value: "begin_at")
             .build()
 
         let result = try await fetcher.fetch(PandasScoreResponse.Matches.self, request: request)

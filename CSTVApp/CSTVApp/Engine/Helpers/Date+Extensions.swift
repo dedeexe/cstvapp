@@ -15,6 +15,12 @@ extension Date {
 
         self = date
     }
+
+    func normalized(calendar: Calendar = Calendar.current, timezone: TimeZone = TimeZone.current) -> Date? {
+        let nowComponents = calendar.dateComponents(in: timezone, from: self)
+        let normalizedDate = calendar.date(from: nowComponents)
+        return normalizedDate
+    }
 }
 
 

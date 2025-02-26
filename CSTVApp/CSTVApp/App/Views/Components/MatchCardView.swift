@@ -14,7 +14,7 @@ struct MatchCardView: View {
 
     init(match: Match) {
         self.match = match
-        dateFormatView = DateFormatView(startDate: match.beginDate, endDate: match.endDate)
+        dateFormatView = DateFormatView(match: match)
     }
 
     var body: some View {
