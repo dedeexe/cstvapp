@@ -13,7 +13,7 @@ extension Match {
         beginDate: Date? = Date(),
         endDate: Date? = Date().addingTimeInterval(3600)
     ) -> Match {
-        Match(id: "1", teams: teams, league: .fixture(), serie: serie, beginDate: beginDate, endDate: endDate)
+        Match(id: "1", teams: teams, league: .fixture(), serie: serie, beginDate: beginDate, endDate: endDate, status: .undefined)
     }
 }
 #endif

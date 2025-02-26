@@ -17,7 +17,7 @@ final class TeamServiceTests: XCTestCase {
 
     func testAPIRequest() async throws {
         sut = TeamService()
-        let result = try await sut.fetchTeam(id: 133009)
+        let result = try await sut.fetchTeam(id: "133009")
         print(result)
     }
 

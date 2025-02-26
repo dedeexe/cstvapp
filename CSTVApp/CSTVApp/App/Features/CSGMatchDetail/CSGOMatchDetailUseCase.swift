@@ -4,7 +4,6 @@ class CSGOMatchDetailUseCase {
     enum UseCaseError: Error {
         case missingOpponents
         case parsingMatch
-        case parsingTeam
     }
 
     let matchesService: MatchesService
@@ -31,9 +30,8 @@ class CSGOMatchDetailUseCase {
 
         let (firstTeamResponse, secondTeamResponse) = try await (firstTeamRequest, secondTeamRequest)
 
-        guard let firstTeam = Team(mapping: firstTeamResponse), let secondTeam = Team(mapping: secondTeamResponse) else {
-            throw UseCaseError.parsingTeam
-        }
+        let firstTeam = Team(mapping: firstTeamResponse)
+        let secondTeam = Team(mapping: secondTeamResponse)
 
         var changedMatch = match
         changedMatch.teams[0] = firstTeam

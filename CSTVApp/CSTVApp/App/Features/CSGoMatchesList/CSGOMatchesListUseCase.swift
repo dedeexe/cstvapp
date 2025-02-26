@@ -9,7 +9,7 @@ class CSGOMatchesListUseCase {
 
     func getMatches(beginDate: Date, page: Int) async throws -> [Match] {
         let result = try await service.fetchMatches(beginningAt: beginDate, page: page)
-        let matches = result.compactMap(Match.init(mapping:))
+        let matches = result.filter{ $0.status != "canceled" }.compactMap(Match.init(mapping:))
         return matches
     }
 }

@@ -1,14 +1,10 @@
 import Foundation
 
 extension League {
-    init?(mapping entity: PandasScoreResponse.League?) {
-        guard let entity = entity else {
-            return nil
-        }
-
+    init(mapping entity: PandasScoreResponse.League?) {
         self.init(
-            name: entity.name ?? "",
-            imageURL: URL(string: entity.imageUrl ?? "")
+            name: entity?.name ?? "",
+            imageURL: URL(string: entity?.imageUrl ?? "")
         )
     }
 }

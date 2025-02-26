@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MatchCardView: View {
     let match: Match
+    let dateFormatView: DateFormatView
 
     var firstTeam: Team {
         match.teams[0]
@@ -9,6 +10,11 @@ struct MatchCardView: View {
 
     var secondTeam: Team {
         match.teams[1]
+    }
+
+    init(match: Match) {
+        self.match = match
+        dateFormatView = DateFormatView(startDate: match.beginDate, endDate: match.endDate)
     }
 
     var body: some View {
@@ -35,12 +41,12 @@ struct MatchCardView: View {
     }
 
     var dateLabel: some View {
-        TextLabel(match.formattedDate, style: .small)
+        TextLabel(dateFormatView.formattedDate(), style: .small)
             .frame(height: Measure.raw16)
             .padding(.top, Measure.spaceNormal)
             .padding(Measure.spaceSmall)
             .padding(.trailing, Measure.spaceNormal)
-            .background(match.isRunning ? Palette.labelActive.color : Palette.labelDeactive.color)
+            .background(dateFormatView.isNow ? Palette.labelActive.color : Palette.labelDeactive.color)
             .clipShape(RoundedRectangle(cornerRadius: Measure.radiusDefault, style: .continuous))
     }
 
@@ -58,30 +64,22 @@ struct MatchCardView: View {
 #Preview {
     VStack(spacing: 12) {
         MatchCardView(
-            match: Match(
-                id: "001",
+            match: .fixture(
                 teams: [
-                    Team(id: "0", name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: []),
-                    Team(id: "1", name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: [])
-                ],
-                league: League(name: "Main League", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-                serie: Serie(fullName: "The League"),
-                beginDate: Date(),
-                endDate: Date().addingTimeInterval(300)
+                    .fixture(name: "A Team", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
+                    .fixture(name: "B Team", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
+                ]
             )
         )
 
         MatchCardView(
-            match: Match(
-                id: "001",
+            match: .fixture(
                 teams: [
-                    Team(id: "0", name: "Team A", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: []),
-                    Team(id: "1", name: "Team B", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"), players: [])
+                    .fixture(name: "C Team", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
+                    .fixture(name: "D Team", imageURL: URL(string: "https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg"))
                 ],
-                league: League(name: "Main League", imageURL: URL(string:"https://cdn.cdkitchen.com/recipes/images/2016/10/35608-6893-mx.jpg")),
-                serie: Serie(fullName: "The League"),
                 beginDate: Date(),
-                endDate: Date().addingTimeInterval(-300)
+                endDate: Date()
             )
         )
     }

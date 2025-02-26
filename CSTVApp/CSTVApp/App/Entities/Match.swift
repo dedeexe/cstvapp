@@ -7,6 +7,7 @@ struct Match: Identifiable {
     var serie: Serie
     var beginDate: Date?
     var endDate: Date?
+    var status: Status
 
     var isRunning: Bool {
         guard let beginDate, let endDate else {
@@ -34,10 +35,26 @@ struct Match: Identifiable {
 
         return result
     }
+
+    enum Status: String {
+        case finished
+        case notPlayed = "not_played"
+        case notStarted = "not_started"
+        case running
+        case undefined
+    }
 }
 
 extension Match {
     static var empty: Match {
-        Match(id: "", teams: [.empty, .empty], league: .init(name: ""), serie: .init(fullName: ""))
+        Match(
+            id: "",
+            teams: [.empty, .empty],
+            league: .init(name: ""),
+            serie: .init(fullName: ""),
+            beginDate: nil,
+            endDate: nil,
+            status: .undefined
+        )
     }
 }

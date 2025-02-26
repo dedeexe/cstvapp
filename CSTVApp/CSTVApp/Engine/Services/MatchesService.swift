@@ -9,8 +9,10 @@ final class MatchesService {
     }
 
     func fetchMatches(beginningAt date: Date, page: Int, pageSize: Int = 30) async throws -> PandasScoreResponse.Matches {
+        let extraPath = "/running"
+
         let request = HTTPRequest.builder
-            .url(ConfigProvider().baseURLFor(game: .csgo) + path)
+            .url(ConfigProvider().baseURLFor(game: .csgo) + path + extraPath)
             .paramter(key: "begin_at", value: date.formattedISO8601)
             .paramter(key: "page", value: String(page))
             .paramter(key: "per_page", value: String(pageSize))

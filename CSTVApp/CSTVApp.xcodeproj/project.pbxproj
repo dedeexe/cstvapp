@@ -29,38 +29,9 @@
 		140EBD202D67A59100766742 /* CSTVAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSTVAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		140EBDDD2D6E394600766742 /* Exceptions for "CSTVApp" folder in "CSTVAppTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Shared/Fixtures/League+Fixtures.swift",
-				"Shared/Fixtures/Match+Fixtures.swift",
-				"Shared/Fixtures/Player+Fixtures.swift",
-				"Shared/Fixtures/Serie+Fixtures.swift",
-				"Shared/Fixtures/Team+Fixtures.swift",
-			);
-			target = 140EBD152D67A59100766742 /* CSTVAppTests */;
-		};
-		140EBDDE2D6E394600766742 /* Exceptions for "CSTVApp" folder in "CSTVAppUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Shared/Fixtures/League+Fixtures.swift",
-				"Shared/Fixtures/Match+Fixtures.swift",
-				"Shared/Fixtures/Player+Fixtures.swift",
-				"Shared/Fixtures/Serie+Fixtures.swift",
-				"Shared/Fixtures/Team+Fixtures.swift",
-			);
-			target = 140EBD1F2D67A59100766742 /* CSTVAppUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		140EBD082D67A58F00766742 /* CSTVApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				140EBDDD2D6E394600766742 /* Exceptions for "CSTVApp" folder in "CSTVAppTests" target */,
-				140EBDDE2D6E394600766742 /* Exceptions for "CSTVApp" folder in "CSTVAppUITests" target */,
-			);
 			path = CSTVApp;
 			sourceTree = "<group>";
 		};

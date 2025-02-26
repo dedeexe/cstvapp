@@ -17,7 +17,6 @@ struct CSGOMatchDetailScreen: View {
                 matchView
             }
         }
-        .ignoresSafeArea()
         .toolbarColorScheme(.dark)
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
