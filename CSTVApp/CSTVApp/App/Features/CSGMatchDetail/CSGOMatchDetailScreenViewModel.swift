@@ -48,6 +48,10 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
         }
     }
 
+    func routeBack() {
+        router.rootCoordinator.popLast()
+    }
+
     private func normalizedTeams() -> [(Player, Player)] {
         var firstTeamPlayers = firstTeam.players
         var secondTeamPlayers = secondTeam.players

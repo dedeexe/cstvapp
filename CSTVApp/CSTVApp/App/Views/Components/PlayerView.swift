@@ -18,7 +18,10 @@ struct PlayerView: View {
 
                 VStack(alignment: horizontalAlignment) {
                     TextLabel(player.nickname, style: .caption)
+                        .multilineTextAlignment(style == .leading ? .leading : .trailing)
+
                     TextLabel(player.name, style: .subtitle)
+                        .multilineTextAlignment(style == .leading ? .leading : .trailing)
                 }
                 .padding(style == .leading ? .leading : .trailing, 72)
 

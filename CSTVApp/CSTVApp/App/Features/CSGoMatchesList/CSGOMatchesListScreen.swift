@@ -19,7 +19,7 @@ struct CSGOMatchesListScreen: View {
         }
         .navigationTitle("Main Screen")
         .scrollContentBackground(.hidden)
-        .foregroundStyle(.white)
+        .foregroundStyle(Palette.white.color)
         .background(Palette.background.color)
         .toolbarBackground(Palette.background.color)
         .toolbarColorScheme(.dark)

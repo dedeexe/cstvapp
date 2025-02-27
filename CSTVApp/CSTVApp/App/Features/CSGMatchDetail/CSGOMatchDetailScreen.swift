@@ -18,6 +18,12 @@ struct CSGOMatchDetailScreen: View {
             }
         }
         .toolbarColorScheme(.dark)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                backButton
+            }
+        }
+        .navigationBarBackButtonHidden()
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .scrollContentBackground(.hidden)
@@ -48,6 +54,14 @@ struct CSGOMatchDetailScreen: View {
                     }
                 }
             }
+        }
+    }
+
+    var backButton: some View {
+        Button {
+            viewModel.routeBack()
+        } label: {
+            Icon.arrowLeft.image.foregroundStyle(Palette.white.color)
         }
     }
 

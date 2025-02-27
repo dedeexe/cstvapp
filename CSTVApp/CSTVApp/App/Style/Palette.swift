@@ -9,6 +9,7 @@ enum Palette: String {
     case secondary
     case separator
     case subtitle
+    case white
 
     var color: Color {
         Color(self.rawValue)
