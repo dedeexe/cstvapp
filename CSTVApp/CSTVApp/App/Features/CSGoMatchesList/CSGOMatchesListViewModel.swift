@@ -53,7 +53,7 @@ class CSGOMatchesListViewModel: ObservableObject {
     ///
     func loadNextPage() {
         if hasMorePages {
-            page += 1
+            page += 7
             fetchMatches()
         }
     }
@@ -63,8 +63,10 @@ class CSGOMatchesListViewModel: ObservableObject {
     ///
     func refresh() {
         page = 1
+        hasMorePages = true
         isFirstTime = true
         referenceDate = Date()
+        matches.removeAll()
         getMatches()
     }
 
@@ -93,12 +95,7 @@ class CSGOMatchesListViewModel: ObservableObject {
                     self?.errorMessage = nil
                 }
             } catch {
-                Task { @MainActor [weak self] in
-                    self?.isLoading = false
-                    self?.isFirstTime = false
-                    self?.isLoadingMorePages = false
-                    self?.errorMessage = L10n.ErrorMessage.generic.localized
-                }
+                handleError(error: error)
             }
         }
     }
