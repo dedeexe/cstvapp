@@ -4,10 +4,15 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
 
     @Published var match: Match = .empty
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String? = nil
 
     private let useCase: CSGOMatchDetailUseCase
     private let matchId: String
     private let router: CSGOMatchDetailRouter
+
+    var hasError: Bool {
+        errorMessage != nil
+    }
 
     var firstTeam: Team {
         match.teams[0]
@@ -25,6 +30,10 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
         match.league.name + " " + match.serie.fullName
     }
 
+    var matchDate: String {
+        match.formattedDate
+    }
+
     init(matchId: String, useCase: CSGOMatchDetailUseCase = CSGOMatchDetailUseCase(), router: CSGOMatchDetailRouter) {
         self.useCase = useCase
         self.matchId = matchId
@@ -36,14 +45,22 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
             return
         }
 
+        errorMessage = nil
         isLoading.toggle()
 
         Task {
-            let result = try await useCase.getMatch(id: id)
+            do {
+                let result = try await useCase.getMatch(id: id)
 
-            Task { @MainActor [weak self] in
-                self?.match = result
-                self?.isLoading = false
+                Task { @MainActor [weak self] in
+                    self?.match = result
+                    self?.isLoading = false
+                }
+            } catch {
+                Task { @MainActor [weak self] in
+                    self?.errorMessage = "Something went wrong!"
+                    self?.isLoading = false
+                }
             }
         }
     }

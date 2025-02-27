@@ -151,4 +151,9 @@ enum PandasScoreResponse {
         let imageUrl: String?
     }
 
+    //MARK: - Error
+    struct ErrorResponse: Decodable {
+        let error: String?
+    }
+
 }

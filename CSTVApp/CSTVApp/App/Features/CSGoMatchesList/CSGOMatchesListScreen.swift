@@ -11,7 +11,9 @@ struct CSGOMatchesListScreen: View {
         ZStack {
             Palette.background.color
 
-            if viewModel.isLoading {
+            if viewModel.hasError {
+                errorView
+            } else if viewModel.isLoading {
                 SpinnerView()
             } else {
                 matchesList
@@ -42,6 +44,13 @@ struct CSGOMatchesListScreen: View {
                 }
         }
         .listStyle(.plain)
+    }
+
+    var errorView: some View {
+        ErrorMessageView(message: viewModel.errorMessage ?? "") {
+            viewModel.recoveryFromError()
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 

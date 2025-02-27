@@ -12,6 +12,10 @@ class CSGOMatchesListViewModel: ObservableObject {
     var page = 1
     var isFirstTime = true
 
+    var hasError: Bool {
+        errorMessage != nil
+    }
+
     private let router: CSGOMatchesListRouter
 
     init(
@@ -23,9 +27,11 @@ class CSGOMatchesListViewModel: ObservableObject {
     }
 
     func getMatches(byPullRefresh: Bool = false) {
-        guard !isLoading && !isRefreshLoading, isFirstTime else {
+        guard !isLoading, !isRefreshLoading, isFirstTime else {
             return
         }
+
+        errorMessage = nil
 
         if byPullRefresh {
             self.isRefreshLoading.toggle()
@@ -33,18 +39,31 @@ class CSGOMatchesListViewModel: ObservableObject {
             isLoading.toggle()
         }
 
-        errorMessage = nil
-
         Task {
-            let result = try await matchesUseCase.getMatches(beginDate: referenceDate, page: page)
+            do {
+                let result = try await matchesUseCase.getMatches(beginDate: referenceDate, page: page)
 
-            Task { @MainActor [weak self] in
-                self?.matches += result
-                self?.isLoading = false
-                self?.isFirstTime = false
-                self?.isRefreshLoading = false
+                Task { @MainActor [weak self] in
+                    self?.matches += result
+                    self?.isLoading = false
+                    self?.isFirstTime = false
+                    self?.isRefreshLoading = false
+                    self?.errorMessage = nil
+                }
+            } catch {
+                Task { @MainActor [weak self] in
+                    self?.isLoading = false
+                    self?.isFirstTime = false
+                    self?.isRefreshLoading = false
+                    self?.errorMessage = "Something went wrong. Try again"
+                }
             }
         }
+    }
+
+    func recoveryFromError() {
+        isFirstTime = true
+        getMatches()
     }
 
     func refresh() {

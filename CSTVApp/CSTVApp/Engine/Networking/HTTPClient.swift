@@ -3,7 +3,7 @@ import Foundation
 enum HTTPClientError: Error {
     case invalidRequestURL
     case invalidResponse
-    case httpError(Int)
+    case httpError(Int, Data)
     case serverError(Int)
     case unknownError
     case decodingError(String)
@@ -36,11 +36,11 @@ final class HTTPClient {
         useCache: Bool = false
     ) async throws -> Data {
         let successRange = 200..<300
+        let errorRange = 400..<600
 
         guard let urlRequest = makeRequest(request, additionalHeaders: additionalHeaders) else {
             throw HTTPClientError.invalidRequestURL
         }
-
 
         if useCache, let cachedResponse = urlCache.cachedResponse(for: urlRequest) {
             return cachedResponse.data
@@ -55,6 +55,12 @@ final class HTTPClient {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw HTTPClientError.invalidResponse
         }
+
+        if case errorRange = httpResponse.statusCode {
+            throw HTTPClientError.httpError(httpResponse.statusCode, data)
+        }
+
+        //There is a limbo here. No status code 300 range is being handled (signed Dede.exe) :D
 
         guard case successRange = httpResponse.statusCode else {
             throw HTTPClientError.unknownError
@@ -95,9 +101,6 @@ final class HTTPClient {
         additionalHeaders.forEach { key, value in
             newRequest.addValue(value, forHTTPHeaderField: key)
         }
-
-        
-        
 
         return newRequest
     }

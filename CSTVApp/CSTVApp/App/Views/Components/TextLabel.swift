@@ -24,6 +24,7 @@ extension TextLabel {
         case tiny
         case subtitle
         case caption
+        case action
 
         var font: Font {
             switch self {
@@ -35,6 +36,8 @@ extension TextLabel {
                 return Typography.subtitle
             case .caption:
                 return Typography.caption
+            case .action:
+                return Typography.caption.weight(.black)
             }
         }
 
@@ -46,6 +49,8 @@ extension TextLabel {
                 return Palette.subtitle.color
             case .caption:
                 return Palette.caption.color
+            case .action:
+                return Palette.white.color
             }
         }
     }

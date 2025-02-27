@@ -11,7 +11,9 @@ struct CSGOMatchDetailScreen: View {
         ZStack {
             Palette.background.color
 
-            if viewModel.isLoading {
+            if viewModel.hasError {
+                errorView
+            } else if viewModel.isLoading {
                 SpinnerView()
             } else {
                 matchView
@@ -48,7 +50,7 @@ struct CSGOMatchDetailScreen: View {
                 )
                 .padding(.bottom, Measure.raw24)
 
-                TextLabel("Hoje, 21:00", style: .caption)
+                TextLabel(viewModel.matchDate, style: .caption)
                     .padding(.bottom, Measure.raw24)
 
                 VStack {
@@ -69,6 +71,13 @@ struct CSGOMatchDetailScreen: View {
         } label: {
             Icon.arrowLeft.image.foregroundStyle(Palette.white.color)
         }
+    }
+
+    var errorView: some View {
+        ErrorMessageView(message: viewModel.errorMessage ?? "") {
+            viewModel.getMatchDetail()
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private func createPlayerView(player: Player, style: PlayerView.Style) -> some View {

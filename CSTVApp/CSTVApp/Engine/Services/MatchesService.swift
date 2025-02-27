@@ -19,8 +19,12 @@ final class MatchesService {
             .paramter(key: "sort", value: "begin_at")
             .build()
 
-        let result = try await fetcher.fetch(PandasScoreResponse.Matches.self, request: request)
-        return result
+        do {
+            let result = try await fetcher.fetch(PandasScoreResponse.Matches.self, request: request)
+            return result
+        } catch {
+            throw handleError(error: error)
+        }
     }
 
     func fetchMatch(id: Int) async throws -> PandasScoreResponse.Match {
@@ -28,7 +32,15 @@ final class MatchesService {
             .url(ConfigProvider().baseURLFor(game: .none) + path + "/" + String(id))
             .build()
 
-        let result = try await fetcher.fetch(PandasScoreResponse.Match.self, request: request)
-        return result
+        do {
+            let result = try await fetcher.fetch(PandasScoreResponse.Match.self, request: request)
+            return result
+        } catch {
+            throw handleError(error: error)
+        }
+    }
+
+    func handleError(error: Error) -> Error {
+        ServiceErrorHandler(error: error).translateError()
     }
 }

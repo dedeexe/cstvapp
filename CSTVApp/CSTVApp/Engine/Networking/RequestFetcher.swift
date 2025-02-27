@@ -9,9 +9,7 @@ class RequestFetcher {
     private var decoder: JSONDecoder?
 
     let defaultDecoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
+        DefaultJSONDecoder.decoder
     }()
 
     let interceptors: [HTTPServiceRequestInterceptor] = [
