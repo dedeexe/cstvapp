@@ -34,16 +34,31 @@ struct CSGOMatchesListScreen: View {
     }
 
     var matchesList: some View {
-        List(viewModel.matches) { match in
-            MatchCardView(match: match)
-                .padding(Measure.raw1)
-                .listRowSeparator(.hidden)
-                .listRowBackground(Palette.background.color)
-                .onTapGesture {
-                    viewModel.didTapMatch(match: match)
-                }
+        List {
+            ForEach(viewModel.matches) { match in
+                MatchCardView(match: match)
+                    .padding(Measure.raw1)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Palette.background.color)
+                    .onTapGesture {
+                        viewModel.didTapMatch(match: match)
+                    }
+            }
+
+            if viewModel.hasMorePages {
+                paginationView
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Palette.background.color)
+            }
         }
         .listStyle(.plain)
+    }
+
+    var paginationView: some View {
+        SpinnerView()
+            .frame(maxWidth: .infinity)
+            .frame(height: Measure.raw60)
+            .onAppear(perform: viewModel.loadNextPage)
     }
 
     var errorView: some View {

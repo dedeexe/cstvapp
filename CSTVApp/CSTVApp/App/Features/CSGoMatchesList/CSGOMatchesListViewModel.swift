@@ -3,9 +3,10 @@ import Foundation
 class CSGOMatchesListViewModel: ObservableObject {
 
     @Published var matches: [Match] = []
-    @Published var isRefreshLoading: Bool = false
+    @Published var isLoadingMorePages: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    @Published var hasMorePages: Bool = true
 
     var matchesUseCase: CSGOMatchesListUseCase
     var referenceDate: Date = Date()
@@ -26,19 +27,60 @@ class CSGOMatchesListViewModel: ObservableObject {
         self.router = router
     }
 
-    func getMatches(byPullRefresh: Bool = false) {
-        guard !isLoading, !isRefreshLoading, isFirstTime else {
+    ///
+    /// Get matches blocking other request until the current one hadn't finished
+    ///
+    func getMatches() {
+        guard !isLoading, isFirstTime else {
             return
         }
 
-        errorMessage = nil
+        isLoading.toggle()
+        fetchMatches()
+    }
 
-        if byPullRefresh {
-            self.isRefreshLoading.toggle()
-        } else {
-            isLoading.toggle()
+    ///
+    /// Get matches - requested by Error State view
+    ///
+    func recoveryFromError() {
+        isFirstTime = true
+        page = 1
+        getMatches()
+    }
+
+    ///
+    /// Get matches - request for next page of matches
+    ///
+    func loadNextPage() {
+        if hasMorePages {
+            page += 1
+            fetchMatches()
         }
+    }
 
+    ///
+    /// Get Matchtes - Pull refresh
+    ///
+    func refresh() {
+        page = 1
+        isFirstTime = true
+        referenceDate = Date()
+        getMatches()
+    }
+
+    ///
+    /// Route to
+    ///
+    func didTapMatch(match: Match) {
+        router.rootToMatchDetails(match: match)
+    }
+
+
+    ///
+    /// Get Matchtes - Used by other request implementation logic
+    ///
+    private func fetchMatches() {
+        errorMessage = nil
         Task {
             do {
                 let result = try await matchesUseCase.getMatches(beginDate: referenceDate, page: page)
@@ -47,33 +89,35 @@ class CSGOMatchesListViewModel: ObservableObject {
                     self?.matches += result
                     self?.isLoading = false
                     self?.isFirstTime = false
-                    self?.isRefreshLoading = false
+                    self?.isLoadingMorePages = false
                     self?.errorMessage = nil
                 }
             } catch {
                 Task { @MainActor [weak self] in
                     self?.isLoading = false
                     self?.isFirstTime = false
-                    self?.isRefreshLoading = false
-                    self?.errorMessage = L10n.ErrorMessage.generic.rawValue
+                    self?.isLoadingMorePages = false
+                    self?.errorMessage = L10n.ErrorMessage.generic.localized
                 }
             }
         }
     }
 
-    func recoveryFromError() {
-        isFirstTime = true
-        getMatches()
-    }
+    private func handleError(error: Error) {
+        Task { @MainActor [weak self] in
+            switch error {
+            case CSGOMatchesListUseCase.UseCaseError.notMoreResults:
+                self?.hasMorePages = false
 
-    func refresh() {
-        page = 1
-        isFirstTime = true
-        referenceDate = Date()
-        getMatches(byPullRefresh: true)
-    }
+            case CSGOMatchesListUseCase.UseCaseError.generic:
+                self?.isLoading = false
+                self?.isFirstTime = false
+                self?.isLoadingMorePages = false
+                self?.errorMessage = L10n.ErrorMessage.generic.localized
 
-    func didTapMatch(match: Match) {
-        router.rootToMatchDetails(match: match)
+            default:
+                break
+            }
+        }
     }
 }

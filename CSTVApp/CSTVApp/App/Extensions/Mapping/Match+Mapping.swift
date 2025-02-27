@@ -4,6 +4,10 @@ extension Match {
     init?(mapping entity: PandasScoreResponse.Match?) {
         let opponents = (entity?.opponents ?? []).compactMap(Team.init(mapping:))
 
+        guard opponents.count == 2 else {
+            return nil
+        }
+
         self.init(
             id: String(parsingId: entity?.id),
             teams: opponents,

@@ -9,9 +9,10 @@ struct ServiceErrorHandler {
 
     func translateError() -> Error {
         switch error {
-        case let HTTPClientError.httpError(statusCode, data):
+        case let HTTPClientError.httpError(_, data):
             let parsedObject = parsePandasStoreError(data: data)
             return ServiceError.generic(parsedObject.error ?? "")
+
         default:
             return NSError(domain: "Unknown Error", code: 1000)
         }
