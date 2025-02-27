@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MatchCardView: View {
     let match: Match
-    let dateFormatView: DateFormatView
 
     var firstTeam: Team {
         match.teams[0]
@@ -14,7 +13,6 @@ struct MatchCardView: View {
 
     init(match: Match) {
         self.match = match
-        dateFormatView = DateFormatView(match: match)
     }
 
     var body: some View {
@@ -41,12 +39,12 @@ struct MatchCardView: View {
     }
 
     var dateLabel: some View {
-        TextLabel(dateFormatView.formattedDate(), style: .small)
+        TextLabel(match.formattedDate, style: .small)
             .frame(height: Measure.raw16)
             .padding(.top, Measure.spaceNormal)
             .padding(Measure.spaceSmall)
             .padding(.trailing, Measure.spaceNormal)
-            .background(dateFormatView.isNow ? Palette.labelActive.color : Palette.labelDeactive.color)
+            .background(match.isRunning ? Palette.labelActive.color : Palette.labelDeactive.color)
             .clipShape(RoundedRectangle(cornerRadius: Measure.radiusDefault, style: .continuous))
     }
 

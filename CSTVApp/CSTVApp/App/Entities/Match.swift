@@ -10,12 +10,7 @@ struct Match: Identifiable {
     var status: Status
 
     var isRunning: Bool {
-        guard let beginDate, let endDate else {
-            return false
-        }
-        
-        let now = Date()
-        return beginDate < now && now < endDate
+        status == .running
     }
 
     var formattedDate: String {
@@ -23,7 +18,7 @@ struct Match: Identifiable {
             return "now"
         }
 
-        return "Date"
+        return DateFormatView(match: self).formattedDate()
     }
 
     var leagueFullName: String {
