@@ -22,7 +22,13 @@ struct CSGOMatchDetailScreen: View {
             ToolbarItem(placement: .topBarLeading) {
                 backButton
             }
+
+            ToolbarItem(placement: .principal) {
+                TextLabel(viewModel.title, style: .caption)
+                    .foregroundStyle(Palette.white.color)
+            }
         }
+        
         .navigationBarBackButtonHidden()
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
