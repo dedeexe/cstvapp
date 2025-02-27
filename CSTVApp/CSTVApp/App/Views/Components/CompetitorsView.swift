@@ -7,7 +7,7 @@ struct CompetitorsView: View {
     var body: some View {
         HStack(spacing: Measure.spaceNormal) {
             TeamNameView(name: firstTeam.name, imageUrl: firstTeam.imageURL)
-            TextLabel("VS", style: .subtitle)
+            TextLabel(L10n.General.versus.localized, style: .subtitle)
             TeamNameView(name: secondTeam.name, imageUrl: secondTeam.imageURL)
         }
     }

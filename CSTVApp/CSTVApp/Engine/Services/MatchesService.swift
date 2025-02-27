@@ -1,6 +1,15 @@
 import Foundation
 
 final class MatchesService {
+    enum ScheduleType: String {
+        case upcoming
+        case running
+
+        var path: String {
+            "/" + self.rawValue
+        }
+    }
+
     private let path = "matches"
     let fetcher: RequestFetcher
 
@@ -8,8 +17,13 @@ final class MatchesService {
         self.fetcher = fetcher
     }
 
-    func fetchMatches(beginningAt date: Date, page: Int, pageSize: Int = 30) async throws -> PandasScoreResponse.Matches {
-        let extraPath = "/running"
+    func fetchMatches(
+        schedule: ScheduleType = .running,
+        beginningAt date: Date,
+        page: Int,
+        pageSize: Int = 30
+    ) async throws -> PandasScoreResponse.Matches {
+        let extraPath = schedule.path
 
         let request = HTTPRequest.builder
             .url(ConfigProvider().baseURLFor(game: .csgo) + path + extraPath)

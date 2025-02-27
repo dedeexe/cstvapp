@@ -19,7 +19,7 @@ struct CSGOMatchesListScreen: View {
                 matchesList
             }
         }
-        .navigationTitle("Main Screen")
+        .navigationTitle(L10n.CSGOMatchList.title.localized)
         .scrollContentBackground(.hidden)
         .foregroundStyle(Palette.white.color)
         .background(Palette.background.color)

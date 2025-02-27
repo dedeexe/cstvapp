@@ -12,8 +12,8 @@ struct DateFormatView {
     private let startDate: Date?
     private let endDate: Date?
 
-    private let calendar = Calendar.current
-    private let timezone = TimeZone.current
+    private let calendar: Calendar
+    private let locale: Locale
 
     var isToday: Bool {
         if let startDate {
@@ -26,36 +26,42 @@ struct DateFormatView {
         match.status == .running
     }
 
-    init(match: Match, referenceDate: Date = Date()) {
+    init(
+        match: Match,
+        referenceDate: Date = Date(),
+        calendar: Calendar = .current,
+        locale: Locale = .current
+    ) {
         self.match = match
         self.referenceDate = referenceDate.normalized() ?? Date()
         self.startDate = match.beginDate?.normalized()
         self.endDate = match.endDate?.normalized()
+        self.calendar = calendar
+        self.locale = locale
     }
 
     func formattedDate() -> String {
-        let calendar = Calendar.current
+        let calendar = calendar
         let formatter = DateFormatter()
+        formatter.locale = locale
 
         if isNow {
-            return "Agora"
+            return L10n.General.now.localized
         }
 
         if isToday {
             formatter.dateFormat = Format.today.rawValue
-            return "Hoje, \(formatter.string(from: startDate ?? Date()))"
+            return L10n.General.today.localized + ", \(formatter.string(from: startDate ?? Date()))"
         }
 
         if let fiveDaysAfter = calendar.date(byAdding: .day, value: 5, to: referenceDate), let startDate {
             if startDate < fiveDaysAfter {
                 formatter.dateFormat = Format.week.rawValue
-                formatter.locale = Locale(identifier: "pt_BR")
                 return formatter.string(from: startDate)
             }
         }
 
         formatter.dateFormat = Format.moreThanWeek.rawValue
-        formatter.locale = Locale(identifier: "pt_BR")
         return formatter.string(from: startDate ?? Date())
     }
 }

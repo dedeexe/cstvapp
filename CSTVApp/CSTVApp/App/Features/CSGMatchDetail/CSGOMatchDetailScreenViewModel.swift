@@ -58,7 +58,7 @@ class CSGOMatchDetailScreenViewModel: ObservableObject {
                 }
             } catch {
                 Task { @MainActor [weak self] in
-                    self?.errorMessage = "Something went wrong!"
+                    self?.errorMessage = L10n.ErrorMessage.generic.localized
                     self?.isLoading = false
                 }
             }

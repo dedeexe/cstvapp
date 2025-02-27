@@ -55,7 +55,7 @@ class CSGOMatchesListViewModel: ObservableObject {
                     self?.isLoading = false
                     self?.isFirstTime = false
                     self?.isRefreshLoading = false
-                    self?.errorMessage = "Something went wrong. Try again"
+                    self?.errorMessage = L10n.ErrorMessage.generic.rawValue
                 }
             }
         }

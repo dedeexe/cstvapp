@@ -8,14 +8,16 @@ struct Match: Identifiable {
     var beginDate: Date?
     var endDate: Date?
     var status: Status
+}
 
+extension Match {
     var isRunning: Bool {
         status == .running
     }
 
     var formattedDate: String {
         if isRunning {
-            return "now"
+            return L10n.General.now.localized
         }
 
         return DateFormatView(match: self).formattedDate()

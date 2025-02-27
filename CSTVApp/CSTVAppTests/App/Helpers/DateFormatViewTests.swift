@@ -47,6 +47,7 @@ final class DateFormatViewTests: XCTestCase {
 
     private func makeSUT(referenceDate: Date? = nil, startDate: Date? = nil, endDate: Date? = nil) {
         initialDate = referenceDate ?? mockInitialDate
-        sut = DateFormatView(referenceDate: initialDate, startDate: startDate, endDate: endDate)
+        let match = Match(id: "001", teams: [], league: .fixture(), serie: .fixture(), beginDate: startDate, endDate: endDate, status: .finished)
+        sut = DateFormatView(match: match)
     }
 }
