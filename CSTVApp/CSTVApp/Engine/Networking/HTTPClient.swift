@@ -1,6 +1,6 @@
 import Foundation
 
-enum HTTPClientError: Error {
+enum HTTPClientError: Error, Equatable {
     case invalidRequestURL
     case invalidResponse
     case httpError(Int, Data)
@@ -9,18 +9,13 @@ enum HTTPClientError: Error {
     case decodingError(String)
 }
 
-protocol HTTPServiceRequestInterceptor {
-    var identifier: String { get }
-    func intercept(request: URLRequest) -> URLRequest
-}
-
 final class HTTPClient {
-    let urlSession: URLSession
+    let urlSession: HTTPClientURLSession
     let urlCache: URLCache
 
     private(set) var requestMiddlewares: [HTTPServiceRequestInterceptor] = []
 
-    init(urlSession: URLSession = URLSession.shared, urlCache: URLCache = URLCache.shared) {
+    init(urlSession: HTTPClientURLSession = URLSession.shared, urlCache: URLCache = URLCache.shared) {
         self.urlSession = urlSession
         self.urlCache = urlCache
     }
@@ -46,11 +41,13 @@ final class HTTPClient {
             return cachedResponse.data
         }
 
-        let interceptedRequest = interceptors.reduce(urlRequest) { request, middleware in
+        let intercepctorsList = requestMiddlewares + interceptors
+
+        let interceptedRequest = intercepctorsList.reduce(urlRequest) { request, middleware in
             middleware.intercept(request: request)
         }
 
-        let (data, response) = try await urlSession.data(for: interceptedRequest)
+        let (data, response) = try await urlSession.data(for: interceptedRequest, delegate: nil)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw HTTPClientError.invalidResponse

@@ -1,10 +1,3 @@
-//
-//  SplashScreen.swift
-//  CSTVApp
-//
-//  Created by dede.exe on 25/02/25.
-//
-
 import SwiftUI
 
 struct SplashScreen: View {
